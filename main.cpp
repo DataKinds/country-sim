@@ -92,7 +92,7 @@ public:
 		ostream << printProperty("GDP", std::to_string(economy.gdp), 1);
 		ostream << printProperty("Money", std::to_string(economy.money), 1);
 		ostream << printProperty("Assets", "", 1);
-		for (int i = 0; i < economy.assets.size(); i++) {
+		for (unsigned int i = 0; i < economy.assets.size(); i++) {
 			ostream << printProperty(economy.assets.at(i).name, "", 2);
 			ostream << printProperty("Production rate", std::to_string(economy.assets.at(i).productionRate), 3);
 			ostream << printProperty("Use rate", std::to_string(economy.assets.at(i).useRate), 3);
@@ -123,14 +123,12 @@ GameState initGame() {
 
 struct Button {
 	std::string id;
-	bool enabled;
-	bool pressed;
 	int x;
 	int y;
 	int w;
 	int h;
 };
-sf::Text createButtonWithText(std::string text, sf::Font font, int charSize, int x, int y, int w, int h, std::vector<Button>* buttons, std::string buttonId, bool enabled) {
+sf::Text createButtonWithText(std::string text, sf::Font font, int charSize, int x, int y, int w, int h, std::vector<Button>* buttons, std::string buttonId) {
 	sf::Text outputText;
 	outputText.setFont(font);
 	outputText.setString(text);
@@ -142,12 +140,11 @@ sf::Text createButtonWithText(std::string text, sf::Font font, int charSize, int
 	outputButton.y = y;
 	outputButton.h = h;
 	outputButton.w = w;
-	outputButton.enabled = enabled;
 	buttons->push_back(outputButton);
 	return outputText;
 }
 Button* getButtonById(std::string id, std::vector<Button> buttons) {
-	for (int i = 0; i < buttons.size(); i++) {
+	for (unsigned int i = 0; i < buttons.size(); i++) {
 		if (buttons.at(i).id == id) {
 			return &buttons.at(i);
 		}
@@ -155,12 +152,21 @@ Button* getButtonById(std::string id, std::vector<Button> buttons) {
 	return nullptr;
 }
 
+void handleButtonPresses(std::string id) {
+}
+
+typedef enum UiTab {
+	TRADE,
+	ASSETS,
+	POPULATION
+} UiTab;
 int main() {
 	sf::RenderWindow window(sf::VideoMode(WIDTH_WINDOW, HEIGHT_WINDOW), "SFML");
 	GameState gameState = initGame();
 	sf::Font statusFont;
 	statusFont.loadFromFile("SourceCodePro-Regular.ttf");
 	std::vector<Button> buttons;
+	UiTab currentTab = UiTab::ASSETS;
 	while (window.isOpen()) {
 		sf::Event e;
 		while (window.pollEvent(e)) {
@@ -168,19 +174,13 @@ int main() {
 				window.close();
 			} else if (e.type == sf::Event::MouseButtonPressed) {
 				if (e.mouseButton.button == sf::Mouse::Left) {
-					for (int i = 0; i < buttons.size(); i++) {
+					for (unsigned int i = 0; i < buttons.size(); i++) {
 						Button currentButton = buttons.at(i);
 						if (currentButton.x < e.mouseButton.x && (currentButton.x + currentButton.w) > e.mouseButton.x) {
 							if (currentButton.y < e.mouseButton.y && (currentButton.y + currentButton.h) > e.mouseButton.y) {
-								buttons.at(i).pressed = true;
+								handleButtonPresses(currentButton.id);
 							}
 						}
-					}
-				}
-			} else if (e.type == sf::Event::MouseButtonReleased) {
-				if (e.mouseButton.button == sf::Mouse::Left) {
-					for (int i = 0; i < buttons.size(); i++) {
-						buttons.at(i).pressed = false;
 					}
 				}
 			}
@@ -193,36 +193,30 @@ int main() {
 		sf::RectangleShape topBar(sf::Vector2f(WIDTH_WINDOW, 50));
 		topBar.setFillColor(sf::Color(32, 32, 32));
 		window.draw(topBar);
-		sf::Text tradeText = createButtonWithText(
+		window.draw(createButtonWithText(
 			"[TRADE]", //text
 			statusFont, 16, //font, fontSize
-			30, 30, //x, y
+			(int)(WIDTH_WINDOW/4), 10, //x, y
 			100, 30, //w, h
 			&buttons, //button vector
-			"topBarTradeButton", //id
-			true //enabled
-			);
-		window.draw(tradeText);
-		sf::Text assetText = createButtonWithText(
+			"topBarTradeButton" //id
+			));
+		window.draw(createButtonWithText(
 			"[ASSETS]", //text
 			statusFont, 16, //font, fontSize
 			(int)(2*WIDTH_WINDOW/4), 10, //x, y
 			100, 30, //w, h
 			&buttons, //button vector
-			"topBarAssetButton", //id
-			true //enabled
-			);
-		window.draw(assetText);
-		sf::Text populationText = createButtonWithText(
+			"topBarAssetButton" //id
+			));
+		window.draw(createButtonWithText(
 			"[POPULATION]", //text
 			statusFont, 16, //font, fontSize
 			(int)(3*WIDTH_WINDOW/4), 10, //x, y
 			100, 30, //w, h
 			&buttons, //button vector
-			"topBarPopulationButton", //id
-			true //enabled
-			);
-		window.draw(populationText);
+			"topBarPopulationButton" //id
+			));
 
 
 		sf::Text countryStatus;
