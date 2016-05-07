@@ -129,7 +129,6 @@ struct Button {
 	int y;
 	int w;
 	int h;
-	ButtonCallback buttonCallback;
 };
 sf::Text createButtonWithText(std::string text, sf::Font font, int charSize, int x, int y, int w, int h, std::vector<Button>* buttons, std::string buttonId, bool enabled) {
 	sf::Text outputText;
@@ -144,14 +143,13 @@ sf::Text createButtonWithText(std::string text, sf::Font font, int charSize, int
 	outputButton.h = h;
 	outputButton.w = w;
 	outputButton.enabled = enabled;
-	outputButton.buttonCallback = buttonCallback;
 	buttons->push_back(outputButton);
 	return outputText;
 }
 Button* getButtonById(std::string id, std::vector<Button> buttons) {
 	for (int i = 0; i < buttons.size(); i++) {
 		if (buttons.at(i).id == id) {
-			return &buttons.at(i)
+			return &buttons.at(i);
 		}
 	}
 	return nullptr;
@@ -172,17 +170,17 @@ int main() {
 				if (e.mouseButton.button == sf::Mouse::Left) {
 					for (int i = 0; i < buttons.size(); i++) {
 						Button currentButton = buttons.at(i);
-						if (currentButton.x < event.mouseButton.x && (currentButton.x + currentButton.w) > event.mouseButton.x) {
-							if (currentButton.y < event.mouseButton.y && (currentButton.y + currentButton.h) > event.mouseButton.y) {
-								buttons.at(i)->pressed = true;
+						if (currentButton.x < e.mouseButton.x && (currentButton.x + currentButton.w) > e.mouseButton.x) {
+							if (currentButton.y < e.mouseButton.y && (currentButton.y + currentButton.h) > e.mouseButton.y) {
+								buttons.at(i).pressed = true;
 							}
 						}
 					}
 				}
-			}else if (e.type = sf::Event::MouseButtonReleased) {
+			} else if (e.type == sf::Event::MouseButtonReleased) {
 				if (e.mouseButton.button == sf::Mouse::Left) {
 					for (int i = 0; i < buttons.size(); i++) {
-						buttons.at(i)->pressed = false;
+						buttons.at(i).pressed = false;
 					}
 				}
 			}
@@ -198,7 +196,7 @@ int main() {
 		sf::Text tradeText = createButtonWithText(
 			"[TRADE]", //text
 			statusFont, 16, //font, fontSize
-			(int)(WIDTH_WINDOW/4), 10, //x, y
+			30, 30, //x, y
 			100, 30, //w, h
 			&buttons, //button vector
 			"topBarTradeButton", //id
