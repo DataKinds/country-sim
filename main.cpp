@@ -57,6 +57,7 @@ public:
 		int birthRate = 0;
 		int deathRate = 0;
 		int unrestPercent = 0;
+		int happinessPercent = 0;
 	} society;
 
 	Country(std::string name) {
@@ -226,6 +227,14 @@ int main() {
 			"topBarAssetsButton" //id
 			));
 		window.draw(createButtonWithText(
+			"[LABOR]", //text
+			statusFont, 16, //font, fontSize
+			(int)(4*WIDTH_WINDOW/5), 10, //x, y
+			100, 30, //w, h
+			&buttons, //button vector
+			"topBarSocialButton" //id
+			));
+		window.draw(createButtonWithText(
 			"[POPULATION]", //text
 			statusFont, 16, //font, fontSize
 			(int)(3*WIDTH_WINDOW/5), 10, //x, y
@@ -233,14 +242,7 @@ int main() {
 			&buttons, //button vector
 			"topBarPopulationButton" //id
 			));
-		window.draw(createButtonWithText(
-			"[SOCIAL]", //text
-			statusFont, 16, //font, fontSize
-			(int)(4*WIDTH_WINDOW/5), 10, //x, y
-			100, 30, //w, h
-			&buttons, //button vector
-			"topBarSocialButton" //id
-			));
+
 
 		if (gameState.currentTab == UiTab::ASSETS) {
 			for (unsigned int i = 0; i < mainCountry->economy.assets.size(); i++) {
@@ -258,7 +260,48 @@ int main() {
 				assetsText.setPosition((i % 3)*((int)WIDTH_WINDOW / 3)+100, ((int)i / 3)*((int)HEIGHT_WINDOW / 6)+100);
 				window.draw(assetsText);
 			}
+		} else if (gameState.currentTab == UiTab::SOCIAL) {
+			std::ostringstream os;
+			os << mainCountry->printProperty("Total population", std::to_string(mainCountry->society.totalPopulation), 0);
+			os << mainCountry->printProperty("Working population", std::to_string(mainCountry->society.workingPopulation), 1);
+			os << mainCountry->printProperty("Social unrest (%)", std::to_string(mainCountry->society.unrestPercent), 0);
+			sf::Text socialEffectText;
+			socialEffectText.setFont(statusFont);
+			socialEffectText.setString((std::string)os.str());
+			socialEffectText.setCharacterSize(16);
+			socialEffectText.setColor(sf::Color::White);
+			socialEffectText.setPosition(100, 100);
+			window.draw(socialEffectText);
+		} else if (gameState.currentTab == UiTab::POPULATION) {
+			std::ostringstream os;
+			os << mainCountry->printProperty("Total population", std::to_string(mainCountry->society.totalPopulation), 0);
+			os << mainCountry->printProperty("Birth rate", std::to_string(mainCountry->society.birthRate), 1);
+			os << mainCountry->printProperty("Death rate", std::to_string(mainCountry->society.deathRate), 1);
+			os << mainCountry->printProperty("Happiness (%)", std::to_string(mainCountry->society.happinessPercent), 0);
+			sf::Text populationText;
+			populationText.setFont(statusFont);
+			populationText.setString((std::string)os.str());
+			populationText.setCharacterSize(16);
+			populationText.setColor(sf::Color::White);
+			populationText.setPosition(100, 100);
+			window.draw(populationText);
+		} else if (gameState.currentTab == UiTab::TRADE) {
+			sf::Text availableTradeText;
+			availableTradeText.setFont(statusFont);
+			availableTradeText.setString(mainCountry->printProperty("Available trades", "", 0));
+			availableTradeText.setCharacterSize(16);
+			availableTradeText.setColor(sf::Color::White);
+			availableTradeText.setPosition(WIDTH_WINDOW - 100 - availableTradeText.getLocalBounds().width, 100);
+			window.draw(availableTradeText);
+			sf::Text acceptedTradeText;
+			acceptedTradeText.setFont(statusFont);
+			acceptedTradeText.setString(mainCountry->printProperty("Accepted trades", "", 0));
+			acceptedTradeText.setCharacterSize(16);
+			acceptedTradeText.setColor(sf::Color::White);
+			acceptedTradeText.setPosition(100, 100);
+			window.draw(acceptedTradeText);
 		}
+
 		window.display();
 	}
 	return 0;
