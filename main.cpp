@@ -2,115 +2,19 @@
 #include <string>
 #include <iostream>
 #include <sstream>
+#include "Country.h"
 #define WIDTH_WINDOW 1366
 #define HEIGHT_WINDOW 768
 
-class Country {
-public:
-	std::string name;
-
-	struct Asset {
-		std::string name;
-		int exportRate = 0;
-		int importRate = 0;	
-		int productionRate = 0;
-		int useRate = 0;
-	};
-	struct Trade {
-
-	};
-	struct EconomyState {
-		int gdp = 0;
-		int money = 0;
-		std::vector<Asset> assets;
-	} economy;
-	void addAsset(std::string name) {
-		Asset tempAsset;
-		tempAsset.name = name;
-		economy.assets.push_back(tempAsset);
+std::string printProperty(std::string propertyName, std::string property, int indentLevel) {
+	std::string indent = "  ";
+	std::ostringstream propertyStringStream;
+	for (int i = 0; i < indentLevel; i++) {
+		propertyStringStream << indent;
 	}
-
-	typedef enum Gender { 
-		MALE, 
-		FEMALE 
-	} Gender;
-	typedef enum Age { 
-		YOUNG,
-		ADULT,
-		OLD 
-	} Age;
-	typedef enum SocialClass { 
-		LOWER,
-		MIDDLE,
-		UPPER 
-	} SocialClass;
-	struct Person {
-		Gender gender = Gender::MALE;
-		Age age = Age::YOUNG;
-		SocialClass socialClass = SocialClass::LOWER;
-		int happinessPercent = 0;
-	};
-	struct SocialState {
-		std::vector<Person> people;
-		int totalPopulation = 0; 
-		int workingPopulation = 0;
-		int birthRate = 0;
-		int deathRate = 0;
-		int unrestPercent = 0;
-		int happinessPercent = 0;
-	} society;
-
-	Country(std::string name) {
-		this->name = name;
-		addAsset("Precious metal");
-		addAsset("Iron");
-		addAsset("Copper");
-		addAsset("Petroleum");
-		addAsset("Coal");
-		addAsset("Meat");
-		addAsset("Produce");
-		addAsset("Water");
-		addAsset("Cars");
-		addAsset("Medicine");
-		addAsset("Stone");
-		addAsset("Steel");
-		addAsset("Electronics");
-		addAsset("Wood");
-	}
-
-	std::string printProperty(std::string propertyName, std::string property, int indentLevel) {
-		std::string indent = "  ";
-		std::ostringstream propertyStringStream;
-		for (int i = 0; i < indentLevel; i++) {
-			propertyStringStream << indent;
-		}
-		propertyStringStream << propertyName << ": " << property << std::endl;
-		return (std::string)propertyStringStream.str();
-	}
-	std::string prettyPrint() {
-		std::ostringstream ostream;
-		ostream << printProperty("Country", "USSR", 0);
-		ostream << printProperty("Economy", "", 0);
-		ostream << printProperty("GDP", std::to_string(economy.gdp), 1);
-		ostream << printProperty("Money", std::to_string(economy.money), 1);
-		ostream << printProperty("Assets", "", 1);
-		for (unsigned int i = 0; i < economy.assets.size(); i++) {
-			ostream << printProperty(economy.assets.at(i).name, "", 2);
-			ostream << printProperty("Production rate", std::to_string(economy.assets.at(i).productionRate), 3);
-			ostream << printProperty("Use rate", std::to_string(economy.assets.at(i).useRate), 3);
-			ostream << printProperty("Import rate", std::to_string(economy.assets.at(i).importRate), 3);
-			ostream << printProperty("Export rate", std::to_string(economy.assets.at(i).exportRate), 3);
-		}
-		ostream << printProperty("Society", "", 0);
-		ostream << printProperty("Total population", std::to_string(society.totalPopulation), 1);
-		ostream << printProperty("Birth rate", std::to_string(society.birthRate), 2);
-		ostream << printProperty("Death rate", std::to_string(society.deathRate), 2);
-		ostream << printProperty("Working population", std::to_string(society.workingPopulation), 2);
-		ostream << printProperty("Social unrest (%)", std::to_string(society.unrestPercent), 1);
-		return (std::string)ostream.str();
-	}
-};
-
+	propertyStringStream << propertyName << ": " << property << std::endl;
+	return (std::string)propertyStringStream.str();
+}
 typedef enum UiTab {
 	TRADE,
 	ASSETS,
@@ -247,11 +151,11 @@ int main() {
 		if (gameState.currentTab == UiTab::ASSETS) {
 			for (unsigned int i = 0; i < mainCountry->economy.assets.size(); i++) {
 				std::ostringstream os;
-				os << mainCountry->printProperty(mainCountry->economy.assets.at(i).name, "", 0);
-				os << mainCountry->printProperty("Production rate", std::to_string(mainCountry->economy.assets.at(i).productionRate), 1);
-				os << mainCountry->printProperty("Use rate", std::to_string(mainCountry->economy.assets.at(i).useRate), 1);
-				os << mainCountry->printProperty("Import rate", std::to_string(mainCountry->economy.assets.at(i).importRate), 1);
-				os << mainCountry->printProperty("Export rate", std::to_string(mainCountry->economy.assets.at(i).exportRate), 1);
+				os << printProperty(mainCountry->economy.assets.at(i).name, "", 0);
+				os << printProperty("Production rate", std::to_string(mainCountry->economy.assets.at(i).productionRate), 1);
+				os << printProperty("Use rate", std::to_string(mainCountry->economy.assets.at(i).useRate), 1);
+				os << printProperty("Import rate", std::to_string(mainCountry->economy.assets.at(i).importRate), 1);
+				os << printProperty("Export rate", std::to_string(mainCountry->economy.assets.at(i).exportRate), 1);
 				sf::Text assetsText;
 				assetsText.setFont(statusFont);
 				assetsText.setString((std::string)os.str());
@@ -262,9 +166,9 @@ int main() {
 			}
 		} else if (gameState.currentTab == UiTab::SOCIAL) {
 			std::ostringstream os;
-			os << mainCountry->printProperty("Total population", std::to_string(mainCountry->society.totalPopulation), 0);
-			os << mainCountry->printProperty("Working population", std::to_string(mainCountry->society.workingPopulation), 1);
-			os << mainCountry->printProperty("Social unrest (%)", std::to_string(mainCountry->society.unrestPercent), 0);
+			os << printProperty("Total population", std::to_string(mainCountry->society.totalPopulation), 0);
+			os << printProperty("Working population", std::to_string(mainCountry->society.workingPopulation), 1);
+			os << printProperty("Social unrest (%)", std::to_string(mainCountry->society.unrestPercent), 0);
 			sf::Text socialEffectText;
 			socialEffectText.setFont(statusFont);
 			socialEffectText.setString((std::string)os.str());
@@ -274,10 +178,10 @@ int main() {
 			window.draw(socialEffectText);
 		} else if (gameState.currentTab == UiTab::POPULATION) {
 			std::ostringstream os;
-			os << mainCountry->printProperty("Total population", std::to_string(mainCountry->society.totalPopulation), 0);
-			os << mainCountry->printProperty("Birth rate", std::to_string(mainCountry->society.birthRate), 1);
-			os << mainCountry->printProperty("Death rate", std::to_string(mainCountry->society.deathRate), 1);
-			os << mainCountry->printProperty("Happiness (%)", std::to_string(mainCountry->society.happinessPercent), 0);
+			os << printProperty("Total population", std::to_string(mainCountry->society.totalPopulation), 0);
+			os << printProperty("Birth rate", std::to_string(mainCountry->society.birthRate), 1);
+			os << printProperty("Death rate", std::to_string(mainCountry->society.deathRate), 1);
+			os << printProperty("Happiness (%)", std::to_string(mainCountry->society.happinessPercent), 0);
 			sf::Text populationText;
 			populationText.setFont(statusFont);
 			populationText.setString((std::string)os.str());
@@ -288,14 +192,14 @@ int main() {
 		} else if (gameState.currentTab == UiTab::TRADE) {
 			sf::Text availableTradeText;
 			availableTradeText.setFont(statusFont);
-			availableTradeText.setString(mainCountry->printProperty("Available trades", "", 0));
+			availableTradeText.setString(printProperty("Available trades", "", 0));
 			availableTradeText.setCharacterSize(16);
 			availableTradeText.setColor(sf::Color::White);
 			availableTradeText.setPosition(WIDTH_WINDOW - 100 - availableTradeText.getLocalBounds().width, 100);
 			window.draw(availableTradeText);
 			sf::Text acceptedTradeText;
 			acceptedTradeText.setFont(statusFont);
-			acceptedTradeText.setString(mainCountry->printProperty("Accepted trades", "", 0));
+			acceptedTradeText.setString(printProperty("Accepted trades", "", 0));
 			acceptedTradeText.setCharacterSize(16);
 			acceptedTradeText.setColor(sf::Color::White);
 			acceptedTradeText.setPosition(100, 100);
