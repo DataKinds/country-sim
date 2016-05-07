@@ -109,15 +109,22 @@ public:
 	}
 };
 
+typedef enum UiTab {
+	TRADE,
+	ASSETS,
+	POPULATION,
+	SOCIAL
+} UiTab;
 class GameState {
 public:
-	std::vector<Country> countries;
+	std::vector<Country*> countries;
+	UiTab currentTab = UiTab::ASSETS;
 	GameState() {}
 };
 
 GameState initGame() {
 	GameState gameState;
-	gameState.countries.push_back(Country("USSR"));
+	gameState.countries.push_back(new Country("USSR"));
 	return gameState;
 }
 
@@ -152,21 +159,26 @@ Button* getButtonById(std::string id, std::vector<Button> buttons) {
 	return nullptr;
 }
 
-void handleButtonPresses(std::string id) {
+void handleButtonPresses(std::string id, GameState gameState) {
+	if (id == "topBarTradeButton") {
+		gameState.currentTab = UiTab::TRADE;
+	} else if (id == "topBarAssetsButton") {
+		gameState.currentTab = UiTab::ASSETS;
+	} else if (id == "topBarPopulationButton") {
+		gameState.currentTab = UiTab::POPULATION;
+	} else if (id == "topBarSocialButton") {
+		gameState.currentTab = UiTab::SOCIAL;
+	}
 }
 
-typedef enum UiTab {
-	TRADE,
-	ASSETS,
-	POPULATION
-} UiTab;
+
 int main() {
 	sf::RenderWindow window(sf::VideoMode(WIDTH_WINDOW, HEIGHT_WINDOW), "SFML");
 	GameState gameState = initGame();
+	Country* mainCountry = gameState.countries.at(0);
 	sf::Font statusFont;
 	statusFont.loadFromFile("SourceCodePro-Regular.ttf");
 	std::vector<Button> buttons;
-	UiTab currentTab = UiTab::ASSETS;
 	while (window.isOpen()) {
 		sf::Event e;
 		while (window.pollEvent(e)) {
@@ -178,7 +190,7 @@ int main() {
 						Button currentButton = buttons.at(i);
 						if (currentButton.x < e.mouseButton.x && (currentButton.x + currentButton.w) > e.mouseButton.x) {
 							if (currentButton.y < e.mouseButton.y && (currentButton.y + currentButton.h) > e.mouseButton.y) {
-								handleButtonPresses(currentButton.id);
+								handleButtonPresses(currentButton.id, gameState);
 							}
 						}
 					}
@@ -196,7 +208,7 @@ int main() {
 		window.draw(createButtonWithText(
 			"[TRADE]", //text
 			statusFont, 16, //font, fontSize
-			(int)(WIDTH_WINDOW/4), 10, //x, y
+			(int)(WIDTH_WINDOW/5), 10, //x, y
 			100, 30, //w, h
 			&buttons, //button vector
 			"topBarTradeButton" //id
@@ -204,28 +216,45 @@ int main() {
 		window.draw(createButtonWithText(
 			"[ASSETS]", //text
 			statusFont, 16, //font, fontSize
-			(int)(2*WIDTH_WINDOW/4), 10, //x, y
+			(int)(2*WIDTH_WINDOW/5), 10, //x, y
 			100, 30, //w, h
 			&buttons, //button vector
-			"topBarAssetButton" //id
+			"topBarAssetsButton" //id
 			));
 		window.draw(createButtonWithText(
 			"[POPULATION]", //text
 			statusFont, 16, //font, fontSize
-			(int)(3*WIDTH_WINDOW/4), 10, //x, y
+			(int)(3*WIDTH_WINDOW/5), 10, //x, y
 			100, 30, //w, h
 			&buttons, //button vector
 			"topBarPopulationButton" //id
 			));
+		window.draw(createButtonWithText(
+			"[SOCIAL]", //text
+			statusFont, 16, //font, fontSize
+			(int)(4*WIDTH_WINDOW/5), 10, //x, y
+			100, 30, //w, h
+			&buttons, //button vector
+			"topBarSocialButton" //id
+			));
 
-
-		sf::Text countryStatus;
-		countryStatus.setFont(statusFont);
-		countryStatus.setString(gameState.countries.at(0).prettyPrint());
-		countryStatus.setCharacterSize(10);
-		countryStatus.setColor(sf::Color::White);
-		countryStatus.setPosition(10, 10);
-		window.draw(countryStatus);
+		if (gameState.currentTab == UiTab::ASSETS) {
+			for (unsigned int i = 0; i < mainCountry->economy.assets.size(); i++) {
+				std::ostringstream os;
+				os << mainCountry->printProperty(mainCountry->economy.assets.at(i).name, "", 0);
+				os << mainCountry->printProperty("Production rate", std::to_string(mainCountry->economy.assets.at(i).productionRate), 1);
+				os << mainCountry->printProperty("Use rate", std::to_string(mainCountry->economy.assets.at(i).useRate), 1);
+				os << mainCountry->printProperty("Import rate", std::to_string(mainCountry->economy.assets.at(i).importRate), 1);
+				os << mainCountry->printProperty("Export rate", std::to_string(mainCountry->economy.assets.at(i).exportRate), 1);
+				sf::Text assetsText;
+				assetsText.setFont(statusFont);
+				assetsText.setString((std::string)os.str());
+				assetsText.setCharacterSize(16);
+				assetsText.setColor(sf::Color::White);
+				assetsText.setPosition((i % 3)*((int)WIDTH_WINDOW / 3)+100, ((int)i / 3)*((int)HEIGHT_WINDOW / 6)+100);
+				window.draw(assetsText);
+			}
+		}
 		window.display();
 	}
 	return 0;
