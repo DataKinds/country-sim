@@ -1,5 +1,6 @@
 #include <SFML/Graphics.hpp>
 #include <string>
+#include <iostream>
 #include <sstream>
 #define WIDTH_WINDOW 1366
 #define HEIGHT_WINDOW 768
@@ -118,12 +119,13 @@ typedef enum UiTab {
 class GameState {
 public:
 	std::vector<Country*> countries;
-	UiTab currentTab = UiTab::ASSETS;
+	UiTab currentTab;
 	GameState() {}
 };
 
 GameState initGame() {
 	GameState gameState;
+	gameState.currentTab = UiTab::ASSETS;
 	gameState.countries.push_back(new Country("USSR"));
 	return gameState;
 }
@@ -147,6 +149,7 @@ sf::Text createButtonWithText(std::string text, sf::Font font, int charSize, int
 	outputButton.y = y;
 	outputButton.h = h;
 	outputButton.w = w;
+	outputButton.id = buttonId;
 	buttons->push_back(outputButton);
 	return outputText;
 }
@@ -159,15 +162,16 @@ Button* getButtonById(std::string id, std::vector<Button> buttons) {
 	return nullptr;
 }
 
-void handleButtonPresses(std::string id, GameState gameState) {
+void handleButtonPresses(std::string id, GameState* gameState) {
+	std::cout << "Button clicked:" << id << std::endl;
 	if (id == "topBarTradeButton") {
-		gameState.currentTab = UiTab::TRADE;
+		gameState->currentTab = UiTab::TRADE;
 	} else if (id == "topBarAssetsButton") {
-		gameState.currentTab = UiTab::ASSETS;
+		gameState->currentTab = UiTab::ASSETS;
 	} else if (id == "topBarPopulationButton") {
-		gameState.currentTab = UiTab::POPULATION;
+		gameState->currentTab = UiTab::POPULATION;
 	} else if (id == "topBarSocialButton") {
-		gameState.currentTab = UiTab::SOCIAL;
+		gameState->currentTab = UiTab::SOCIAL;
 	}
 }
 
@@ -190,7 +194,7 @@ int main() {
 						Button currentButton = buttons.at(i);
 						if (currentButton.x < e.mouseButton.x && (currentButton.x + currentButton.w) > e.mouseButton.x) {
 							if (currentButton.y < e.mouseButton.y && (currentButton.y + currentButton.h) > e.mouseButton.y) {
-								handleButtonPresses(currentButton.id, gameState);
+								handleButtonPresses(currentButton.id, &gameState);
 							}
 						}
 					}
