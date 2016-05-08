@@ -1,5 +1,7 @@
 #include "Country.h"
 
+
+
 void Country::addAsset(std::string name) {
 	Asset tempAsset;
 	tempAsset.name = name;
@@ -25,5 +27,5 @@ Country::Country(std::string name) {
 }
 
 void tick() {
-	
+
 }
