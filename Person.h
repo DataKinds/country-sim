@@ -39,8 +39,8 @@ public:
 	int age = 0;
 	int money = 0;
 	double happinessPercent = 1; //0 to 1
-	signed char ideoEcononomy = 0; //Range is -3 (collectivist) to +3 (individualist)
-	signed char ideoPhilosophy = 0; //Range is -3 (rationalist) to +3 (spiritualist)
-	signed char ideoMilitary = 0; //Range is -3 (pacifist) to +3 (militarist)
-	signed char ideoGovernment = 0; //Range is -3 (democratic) to +3 (autocratic)
+	double ideoEcononomy = 0; //Range is -1 (collectivist) to +1 (individualist)
+	double ideoPhilosophy = 0; //Range is -1 (rationalist) to +1 (spiritualist)
+	double ideoMilitary = 0; //Range is -1 (pacifist) to +1 (militarist)
+	double ideoGovernment = 0; //Range is -1 (democratic) to +1 (autocratic)
 };
