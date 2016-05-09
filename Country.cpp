@@ -10,7 +10,7 @@ void Country::addAsset(std::string name) {
 
 Country::Country(std::string name) {
 	this->name = name;
-	addAsset("Precious metal");
+	addAsset("Precious metal"); // TBA: Uranium, electricity, fabric, plastic; also, alphabetize
 	addAsset("Iron");
 	addAsset("Copper");
 	addAsset("Petroleum");
