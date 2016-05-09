@@ -1,5 +1,6 @@
 #include <string>
 #include <vector>
+#define STARTING_POPULATION 100
 
 typedef enum Gender { 
 	MALE, 
@@ -32,7 +33,8 @@ private:
 	std::string genPersonId(long generation);
 	std::string genRandomString(unsigned int length);
 public:
-	Person();
+	Person(long generation);
+	long generation = 0; //generation of person (parents = 0, son = 1, grandson = 2, etc.)
 	std::vector<std::string> name; //{firstName, surName, middleNames (optional)}
 	std::string id;
 	Gender gender = Gender::MALE;

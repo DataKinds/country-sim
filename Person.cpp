@@ -20,3 +20,8 @@ std::string Person::genPersonId(long generation) {
 	os << generation << std::time(nullptr) << genRandomString(8);
 	return (std::string)os.str();
 }
+
+Person::Person(long generation) {
+	id = genPersonId(generation);
+	this->generation = generation;
+}

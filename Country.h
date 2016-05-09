@@ -27,10 +27,10 @@ public:
 
 	struct SocialState {
 		std::vector<Person*> people;
-		long totalPopulation = 100; 
+		long totalPopulation = STARTING_POPULATION; 
 		long workingPopulation = 0;
-		unsigned double birthRate = 0;
-		unsigned double deathRate = 0;
+		double birthRate = 0;
+		double deathRate = 0;
 		double unrestPercent = 0; //0 to 1
 		double happinessPercent = 0; //0 to 1
 	} society;
