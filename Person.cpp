@@ -16,12 +16,18 @@ std::string Person::genRandomString(unsigned int length) {
 //birthdate (in unix time) -
 //random 8? character identifier
 std::string Person::genPersonId(long generation) {
+	std::string generationString = std::to_string(generation);
+	unsigned int amountToPad = 6 - generationString.size();
 	std::ostringstream os;
-	os << generation << std::time(nullptr) << genRandomString(8);
+	for (unsigned int i = 0; i < amountToPad; i++) {
+		os << "0";
+	}
+	os << generation << "-" << std::time(nullptr) << "-" << genRandomString(8);
 	return (std::string)os.str();
 }
 
 Person::Person(long generation) {
 	id = genPersonId(generation);
+	name = {"place", "holder", "name"};
 	this->generation = generation;
 }

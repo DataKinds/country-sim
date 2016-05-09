@@ -28,12 +28,20 @@ typedef enum Occupation {
 	LANDOWNER
 } Occupation;
 
+struct Ideals {
+	double economy = 0; //Range is -1 (collectivist) to +1 (individualist)
+	double philosophy = 0; //Range is -1 (rationalist) to +1 (spiritualist)
+	double military = 0; //Range is -1 (pacifist) to +1 (militarist)
+	double government = 0; //Range is -1 (democratic) to +1 (autocratic) 
+};
+
 class Person {
 private:
 	std::string genPersonId(long generation);
 	std::string genRandomString(unsigned int length);
 public:
 	Person(long generation);
+	Person(long generation, Gender gender, Ideals ideals);
 	long generation = 0; //generation of person (parents = 0, son = 1, grandson = 2, etc.)
 	std::vector<std::string> name; //{firstName, surName, middleNames (optional)}
 	std::string id;
@@ -41,8 +49,5 @@ public:
 	int age = 0;
 	int money = 0;
 	double happinessPercent = 1; //0 to 1
-	double ideoEcononomy = 0; //Range is -1 (collectivist) to +1 (individualist)
-	double ideoPhilosophy = 0; //Range is -1 (rationalist) to +1 (spiritualist)
-	double ideoMilitary = 0; //Range is -1 (pacifist) to +1 (militarist)
-	double ideoGovernment = 0; //Range is -1 (democratic) to +1 (autocratic)
+	Ideals ideals;
 };

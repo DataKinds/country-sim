@@ -25,6 +25,8 @@ Country::Country(std::string name) {
 	//fill out initial population
 	for (unsigned int i = 0; i < society.totalPopulation; i++) {
 		society.people.push_back(new Person(0));
+		const char* personId = society.people.at(society.people.size()-1)->id.c_str();
+		printf("Generated a person with ID %s\n", personId);
 	} 
 }
 

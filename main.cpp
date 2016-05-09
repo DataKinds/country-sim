@@ -89,7 +89,7 @@ void tickGameState(GameState* gameState, Country* mainCountry) {
 }
 
 int main() {
-	sf::RenderWindow window(sf::VideoMode(WIDTH_WINDOW, HEIGHT_WINDOW), "SFML");
+	sf::RenderWindow window(sf::VideoMode(WIDTH_WINDOW, HEIGHT_WINDOW), "OpenCountry (pre-alpha)");
 	GameState gameState = initGame();
 	Country* mainCountry = gameState.countries.at(0);
 	sf::Font statusFont;
