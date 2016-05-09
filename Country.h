@@ -14,7 +14,7 @@ public:
 		long double exportRate = 0;
 		long double importRate = 0;	
 		long double productionRate = 0;
-		long doublr useRate = 0;
+		long double useRate = 0;
 	};
 	struct Trade {
 
