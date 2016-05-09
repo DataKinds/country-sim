@@ -89,6 +89,7 @@ void tickGameState(GameState* gameState, Country* mainCountry) {
 }
 
 int main() {
+	srand(time(0));
 	sf::RenderWindow window(sf::VideoMode(WIDTH_WINDOW, HEIGHT_WINDOW), "OpenCountry (pre-alpha)");
 	GameState gameState = initGame();
 	Country* mainCountry = gameState.countries.at(0);

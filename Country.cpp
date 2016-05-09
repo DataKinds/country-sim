@@ -24,9 +24,22 @@ Country::Country(std::string name) {
 	addAsset("Wood");
 	//fill out initial population
 	for (unsigned int i = 0; i < society.totalPopulation; i++) {
+		Gender gender = (rand() % 2 == 1 ? Gender::MALE : Gender::FEMALE);
+		Ideals ideals;
+		ideals.economy = 2*((double)rand()/RAND_MAX)-1;
+		ideals.philosophy = 2*((double)rand()/RAND_MAX)-1;
+		ideals.military = 2*((double)rand()/RAND_MAX)-1;
+		ideals.government = 2*((double)rand()/RAND_MAX)-1;
 		society.people.push_back(new Person(0));
 		const char* personId = society.people.at(society.people.size()-1)->id.c_str();
 		printf("Generated a person with ID %s\n", personId);
+		printf("    Their gender is %s\n", (gender == Gender::MALE ? "male" : "female"));
+		printf("    Their ideals are:\n");
+		printf("    	Economic: %f\n", ideals.economy);
+		printf("    	Economic: %f\n", ideals.economy);
+		printf("    	Economic: %f\n", ideals.economy);
+		printf("    	Economic: %f\n", ideals.economy);
+
 	} 
 }
 

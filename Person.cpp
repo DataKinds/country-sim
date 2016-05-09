@@ -31,3 +31,11 @@ Person::Person(long generation) {
 	name = {"place", "holder", "name"};
 	this->generation = generation;
 }
+
+Person::Person(long generation, Gender gender, Ideals ideals) {
+	id = genPersonId(generation);
+	name = {"place", "holder", "name"};
+	this->generation = generation;
+	this->gender = gender;
+	this->ideals = ideals;
+}
