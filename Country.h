@@ -11,28 +11,28 @@ public:
 	Country(std::string name);
 	struct Asset {
 		std::string name;
-		int exportRate = 0;
-		int importRate = 0;	
-		int productionRate = 0;
-		int useRate = 0;
+		long double exportRate = 0;
+		long double importRate = 0;	
+		long double productionRate = 0;
+		long doublr useRate = 0;
 	};
 	struct Trade {
 
 	};
 	struct EconomyState {
-		int gdp = 0;
-		int money = 0;
+		long gdp = 0;
+		long money = 0;
 		std::vector<Asset> assets;
 	} economy;
 
 	struct SocialState {
 		std::vector<Person*> people;
-		int totalPopulation = 100; 
-		int workingPopulation = 0;
-		int birthRate = 0;
-		int deathRate = 0;
-		int unrestPercent = 0;
-		int happinessPercent = 0;
+		long totalPopulation = 100; 
+		long workingPopulation = 0;
+		unsigned double birthRate = 0;
+		unsigned double deathRate = 0;
+		double unrestPercent = 0; //0 to 1
+		double happinessPercent = 0; //0 to 1
 	} society;
 
 	void tick();
