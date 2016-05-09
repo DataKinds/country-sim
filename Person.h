@@ -6,6 +6,27 @@ typedef enum Gender {
 	FEMALE 
 } Gender;
 
+typedef enum Occupation {
+	CHILD,
+	STUDENT,
+	UNEMPLOYED,
+	REBEL,
+	CRIMINAL,
+	LABORER,
+	SCIENTIST,
+	TEACHER,
+	BUREAUCRAT,
+	CLERK,
+	FARMER,
+	MINER,
+	SOLDIER,
+	OFFICER,
+	DOCTOR,
+	POLICEMAN,
+	MANAGER,
+	LANDOWNER
+} Occupation;
+
 class Person {
 private:
 	std::string genPersonId(long generation);
