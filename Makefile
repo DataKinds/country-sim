@@ -1,2 +1,7 @@
+CC=g++
+INPUT_FILES=main.cpp Country.cpp Person.cpp
+LIBS=-lsfml-graphics -lsfml-window -lsfml-system
+ARGS=-g -std=c++11 -Wall
+
 all:
-	g++ main.cpp Country.cpp -g -o country.out -std=c++11 -Wall -lsfml-graphics -lsfml-window -lsfml-system
+	$(CC) $(INPUT_FILES) -o country.out $(ARGS) $(LIBS)

@@ -2,7 +2,7 @@
 #include <ctime>
 #include "Person.h"
 
-std::string Person::genRandomString(int length) {
+std::string Person::genRandomString(unsigned int length) {
 	const std::string lookupTable = "abcdefghijklmnopqrstuvwxyz1234567890";
 	std::ostringstream os;
 	for (unsigned int i = 0; i < length; i++) {
