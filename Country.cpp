@@ -1,7 +1,5 @@
 #include "Country.h"
 
-
-
 void Country::addAsset(std::string name) {
 	Asset tempAsset;
 	tempAsset.name = name;
@@ -24,6 +22,10 @@ Country::Country(std::string name) {
 	addAsset("Steel");
 	addAsset("Electronics");
 	addAsset("Wood");
+	//fill out initial population
+	for (unsigned int i = 0; i < society.totalPopulation; i++) {
+		society.people.push_back(new Person(0));
+	} 
 }
 
 void tick() {
