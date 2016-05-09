@@ -25,6 +25,7 @@ class GameState {
 public:
 	std::vector<Country*> countries;
 	UiTab currentTab;
+	long day = 0;
 	GameState() {}
 };
 
@@ -80,6 +81,12 @@ void handleButtonPresses(std::string id, GameState* gameState) {
 	}
 }
 
+void tickGameState(GameState* gameState, Country* mainCountry) {
+	gameState->day += 1;
+	for (unsigned int i = 0; i < gameState->countries.size(); i++) {
+		gameState->countries.at(i)->tick();
+	}
+}
 
 int main() {
 	sf::RenderWindow window(sf::VideoMode(WIDTH_WINDOW, HEIGHT_WINDOW), "SFML");

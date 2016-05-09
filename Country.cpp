@@ -28,6 +28,6 @@ Country::Country(std::string name) {
 	} 
 }
 
-void tick() {
+void Country::tick() {
 
 }
