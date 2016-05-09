@@ -17,7 +17,7 @@ public:
 	Gender gender = Gender::MALE;
 	int age = 0;
 	int money = 0;
-	int happinessPercent = 0;
+	double happinessPercent = 1; //0 to 1
 	signed char ideoEcononomy = 0; //Range is -3 (collectivist) to +3 (individualist)
 	signed char ideoPhilosophy = 0; //Range is -3 (rationalist) to +3 (spiritualist)
 	signed char ideoMilitary = 0; //Range is -3 (pacifist) to +3 (militarist)
