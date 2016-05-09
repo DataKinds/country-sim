@@ -36,9 +36,9 @@ Country::Country(std::string name) {
 		printf("    Their gender is %s\n", (gender == Gender::MALE ? "male" : "female"));
 		printf("    Their ideals are:\n");
 		printf("    	Economic: %f\n", ideals.economy);
-		printf("    	Economic: %f\n", ideals.economy);
-		printf("    	Economic: %f\n", ideals.economy);
-		printf("    	Economic: %f\n", ideals.economy);
+		printf("    	Philosophical: %f\n", ideals.philosophy);
+		printf("    	Militarily: %f\n", ideals.military);
+		printf("    	Governmental: %f\n", ideals.government);
 
 	} 
 }
