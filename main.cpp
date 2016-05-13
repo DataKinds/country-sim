@@ -213,7 +213,16 @@ int main() {
 			acceptedTradeText.setPosition(100, 100);
 			window.draw(acceptedTradeText);
 		}
-
+		std::ostringstream dateString;
+		dateString << "Year: " << (int)(gameState.day / 365) << "; Day: " << gameState.day % 365;
+		sf::Text currentGameDate;
+		currentGameDate.setFont(statusFont);
+		currentGameDate.setString(dateString.str());
+		currentGameDate.setCharacterSize(16);
+		currentGameDate.setColor(sf::Color::White);
+		currentGameDate.setPosition(WIDTH_WINDOW - 200, 10);
+		window.draw(currentGameDate);
+		//tickGameState(&gameState, mainCountry);
 		window.display();
 	}
 	return 0;
