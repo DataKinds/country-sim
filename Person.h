@@ -2,9 +2,9 @@
 #include <vector>
 #define STARTING_POPULATION 100
 
-typedef enum Gender { 
-	MALE, 
-	FEMALE 
+typedef enum Gender {
+	MALE,
+	FEMALE
 } Gender;
 
 typedef enum Occupation {
@@ -30,9 +30,9 @@ typedef enum Occupation {
 
 struct Ideals {
 	double economy = 0; //Range is -1 (collectivist) to +1 (individualist)
-	double philosophy = 0; //Range is -1 (rationalist) to +1 (spiritualist)
+	double society = 0; //Range is -1 (progressive) to +1 (reactionary)
 	double military = 0; //Range is -1 (pacifist) to +1 (militarist)
-	double government = 0; //Range is -1 (democratic) to +1 (autocratic) 
+	double government = 0; //Range is -1 (democratic) to +1 (autocratic)
 };
 
 class Person {

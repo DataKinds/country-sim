@@ -27,7 +27,7 @@ Country::Country(std::string name) {
 		Gender gender = (rand() % 2 == 1 ? Gender::MALE : Gender::FEMALE);
 		Ideals ideals;
 		ideals.economy = 2*((double)rand()/RAND_MAX)-1;
-		ideals.philosophy = 2*((double)rand()/RAND_MAX)-1;
+		ideals.society = 2*((double)rand()/RAND_MAX)-1;
 		ideals.military = 2*((double)rand()/RAND_MAX)-1;
 		ideals.government = 2*((double)rand()/RAND_MAX)-1;
 		society.people.push_back(new Person(0));
@@ -35,12 +35,12 @@ Country::Country(std::string name) {
 		printf("Generated a person with ID %s\n", personId);
 		printf("    Their gender is %s\n", (gender == Gender::MALE ? "male" : "female"));
 		printf("    Their ideals are:\n");
-		printf("    	Economic: %f\n", ideals.economy);
-		printf("    	Philosophical: %f\n", ideals.philosophy);
-		printf("    	Militarily: %f\n", ideals.military);
-		printf("    	Governmental: %f\n", ideals.government);
+		printf("    	Economy: %f\n", ideals.economy);
+		printf("    	Society: %f\n", ideals.society);
+		printf("    	Military: %f\n", ideals.military);
+		printf("    	Government: %f\n", ideals.government);
 
-	} 
+	}
 }
 
 void Country::tick() {
