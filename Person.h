@@ -1,10 +1,10 @@
 #include <string>
 #include <vector>
-#define STARTING_POPULATION 100
+#include "Constants.h"
 
-typedef enum Gender { 
-	MALE, 
-	FEMALE 
+typedef enum Gender {
+	MALE,
+	FEMALE
 } Gender;
 
 typedef enum Occupation {
@@ -32,7 +32,7 @@ struct Ideals {
 	double economy = 0; //Range is -1 (collectivist) to +1 (individualist)
 	double philosophy = 0; //Range is -1 (rationalist) to +1 (spiritualist)
 	double military = 0; //Range is -1 (pacifist) to +1 (militarist)
-	double government = 0; //Range is -1 (democratic) to +1 (autocratic) 
+	double government = 0; //Range is -1 (democratic) to +1 (autocratic)
 };
 
 class Person {

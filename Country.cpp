@@ -40,7 +40,7 @@ Country::Country(std::string name) {
 		printf("    	Militarily: %f\n", ideals.military);
 		printf("    	Governmental: %f\n", ideals.government);
 
-	} 
+	}
 }
 
 void Country::tick() {

@@ -1,5 +1,5 @@
 CC=g++
-INPUT_FILES=main.cpp Country.cpp Person.cpp
+INPUT_FILES=main.cpp Country.cpp Person.cpp TabDrawing.cpp
 LIBS=-lsfml-graphics -lsfml-window -lsfml-system
 ARGS=-g -std=c++11 -Wall
 
