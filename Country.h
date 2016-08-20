@@ -1,3 +1,4 @@
+#pragma once
 #include <string>
 #include <vector>
 #include "Person.h"
@@ -12,7 +13,7 @@ public:
 	struct Asset {
 		std::string name;
 		long double exportRate = 0;
-		long double importRate = 0;	
+		long double importRate = 0;
 		long double productionRate = 0;
 		long double useRate = 0;
 	};
@@ -27,7 +28,7 @@ public:
 
 	struct SocialState {
 		std::vector<Person*> people;
-		long totalPopulation = STARTING_POPULATION; 
+		long totalPopulation = STARTING_POPULATION;
 		long workingPopulation = 0;
 		double birthRate = 0;
 		double deathRate = 0;
