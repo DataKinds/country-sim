@@ -4,6 +4,7 @@
 #include <sstream>
 #include "Country.h"
 #include "Constants.h"
+#include "TabDrawing.h"
 
 typedef enum UiTab {
 	TRADE,
@@ -147,13 +148,13 @@ int main() {
 
 
 		if (gameState.currentTab == UiTab::ASSETS) {
-
+            TabDraw::assets(&window, statusFont, mainCountry);
 		} else if (gameState.currentTab == UiTab::SOCIAL) {
-
+            TabDraw::social(&window, statusFont, mainCountry);
 		} else if (gameState.currentTab == UiTab::POPULATION) {
-
+            TabDraw::population(&window, statusFont, mainCountry);
 		} else if (gameState.currentTab == UiTab::TRADE) {
-
+            TabDraw::trade(&window, statusFont, mainCountry);
 		}
 		std::ostringstream dateString;
 		dateString << "Year: " << (int)(gameState.day / 365) << "; Day: " << gameState.day % 365;
